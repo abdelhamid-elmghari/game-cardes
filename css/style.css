@@ -1,0 +1,675 @@
+:root {
+    /*
+            CSS variables (theme colors and font settings)
+            - Modify these values to change the look & feel across the app.
+        */
+    --blue-00: #003049;
+    --blue-22: #023e8a;
+    --blue-33: #0096c7;
+    --blue-44: #0096c7;
+    --blue-55: #90e0ef;
+    --blue-66: #ade8f4;
+    --orange: #fb8500;
+    --withe: #f1faee;
+    --black: #212529;
+    --font-family: "Titillium Web", sans-serif;
+    --font-wight: 200;
+}
+
+
+/* Global resets and base font */
+
+* {
+    font-family: var(--font-family);
+    box-sizing: border-box;
+}
+
+
+/* Page background and spacing */
+
+body {
+    background-color: var(--black);
+    padding: 0;
+    margin: 0;
+}
+
+
+/* Centering container that holds header and cards */
+
+.container {
+    display: none;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.container .title .acount {
+    /* Small account area inside the title (profile image + username) */
+    display: flex;
+    padding: 20px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .title .acount img {
+    width: 60px;
+    border-radius: 50%;
+    border: 1px solid var(--black);
+}
+
+.container .title .acount h1 {
+    text-align: center;
+    margin: 0;
+    color: var(--orange);
+}
+
+.the-score {
+    /* Score box showing score and wins */
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.the-score .number {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding-inline: 10px;
+    background-color: var(--blue-00);
+    color: var(--blue-55);
+    font-size: 1rem;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.the-score .number span {
+    font-weight: 400;
+    border-radius: 30px;
+    padding: 5px 20px;
+    color: var(--orange);
+    background-color: var(--black);
+}
+
+.the-score .number:last-child {
+    background-color: var(--blue-22);
+}
+
+.container .cards {
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 0px 1px 1px 0px;
+}
+
+.container ul {
+    /* Grid that contains the card <li> elements */
+    margin: 3px;
+    padding: 5px;
+    position: relative;
+    border-radius: 10px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: var(--black);
+    list-style-type: none;
+    gap: 25px;
+}
+
+.container ul::after {
+    content: '';
+    padding: 10px;
+    position: absolute;
+    width: 1000px;
+    height: 200px;
+    top: 30%;
+    left: -80%;
+    z-index: -1;
+    animation: rotat 10s linear infinite;
+    background: linear-gradient(90deg, rgb(255, 69, 134), rgb(149, 62, 255));
+}
+
+@keyframes rotat {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.container ul li {
+    /* Individual card container (clickable) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 90px;
+    height: 120px;
+    padding: 0;
+}
+
+.container ul li img {
+    width: 100px;
+}
+
+.choise {
+    height: 40px;
+    background-color: var(--orange);
+    box-shadow: 4px 4px black;
+    border-radius: 5px;
+    color: var(--blue-00);
+    outline: none;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid var(--blue-22);
+}
+
+.view {
+    /* Card face view (used for front and back) */
+    position: absolute;
+    border-radius: 10px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transition: transform 0.5s;
+    transform: rotateY(0deg);
+    user-select: none;
+    pointer-events: none;
+}
+
+.container ul li .back-view {
+    transform: rotateY(-180deg);
+}
+
+.container ul li.flap .view {
+    transform: rotateY(0deg);
+}
+
+.shake {
+    /* Shake animation used for incorrect match feedback */
+    animation: translat 0.5s ease-in-out;
+}
+
+@keyframes translat {
+    0%,
+    20% {
+        transform: translateX(-8px);
+    }
+    20%,
+    40% {
+        transform: translateX(8px);
+    }
+    40%,
+    60% {
+        transform: translateX(-4px);
+    }
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+    80%,
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.nottouche {
+    pointer-events: none;
+    user-select: none;
+}
+
+.send-feadback,
+.game-over,
+.you-win,
+.popap {
+    /* Fullscreen overlays used for game states and intro */
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    position: absolute;
+    background-color: var(--black);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popap {
+    /* Intro popup background and layout */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-clip: content-box;
+    background-size: cover;
+    background-image: url('../images/King.webp');
+}
+
+.blur {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.game-over,
+.you-win {
+    background-color: #2f0025bc;
+    display: none;
+    backdrop-filter: blur(10px);
+}
+
+.you-win .btn {
+    display: flex;
+    gap: 10px;
+}
+
+.game-over .pop-up-gameover,
+.you-win .pop-up-you-win {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 1px 3px var(--blue-22);
+    flex-direction: column;
+    border-radius: 20px;
+    padding-inline: 40px;
+    width: auto;
+    background-color: rgb(0, 0, 0);
+}
+
+.game-over .pop-up-gameover img,
+.you-win .pop-up-you-win img {
+    height: 150px;
+}
+
+.you-win .pop-up-you-win h1 {
+    color: var(--orange);
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    font-style: normal;
+}
+
+.you-win .pop-up-you-win {
+    gap: 10px;
+}
+
+.you-win .pop-up-you-win img {
+    border-radius: 10px;
+    box-shadow: 7px 7px var(--black);
+}
+
+.popap-element {
+    gap: 10px;
+}
+
+
+/* From Uiverse.io by alexruix */
+
+.loader {
+    /* Simple loader animation used in overlays */
+    width: 48px;
+    height: 48px;
+    margin: auto;
+    position: relative;
+}
+
+.loader:before {
+    content: '';
+    width: 48px;
+    height: 5px;
+    background: #f0808050;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    border-radius: 50%;
+    animation: shadow324 0.5s linear infinite;
+}
+
+.loader:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: var(--orange);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    animation: jump7456 0.5s linear infinite;
+}
+
+@keyframes jump7456 {
+    15% {
+        border-bottom-right-radius: 3px;
+    }
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+        transform: translateY(18px) scale(1, .9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes shadow324 {
+    0%,
+    100% {
+        transform: scale(1, 1);
+    }
+    50% {
+        transform: scale(1.2, 1);
+    }
+}
+
+.group {
+    /* Input group used in intro popup */
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+}
+
+.input {
+    /* Styled input used for username */
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    height: 45px;
+    padding-left: 2.5rem;
+    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    border: 0;
+    border-radius: 12px;
+    background-color: #16171d;
+    outline: none;
+    color: #bdbecb;
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: text;
+    z-index: 0;
+}
+
+.input::placeholder {
+    color: #bdbecb;
+}
+
+.input:hover {
+    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+}
+
+.input:active {
+    transform: scale(0.95);
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2.5px #2f303d;
+}
+
+.letsgo,
+.btnDesing,
+.feadback {
+    /* Primary button styles used across overlays */
+    background: var(--orange);
+    font-family: inherit;
+    padding: 0.6em 1.3em;
+    font-weight: 900;
+    font-size: 18px;
+    border: 3px solid black;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    cursor: pointer;
+    width: 200px;
+}
+
+.letsgo {
+    width: 300px;
+}
+
+.letsgo:hover,
+.btnDesing:hover,
+.feadback:hover {
+    transform: translate(-0.05em, -0.05em);
+    box-shadow: 0.15em 0.15em;
+}
+
+.letsgo:active,
+.btnDesing:active,
+.feadback:active {
+    transform: translate(0.05em, 0.05em);
+    box-shadow: 0.05em 0.05em;
+}
+
+.try-again {
+    background-color: var(--withe);
+    width: auto;
+}
+
+.exit,
+.Reset,
+.feadback {
+    background-color: rgb(248, 93, 93);
+    width: auto;
+}
+
+:focus {
+    outline: 0;
+    border-color: #ff8922;
+    box-shadow: 0 0 0 4px #fcd0b5;
+}
+
+.popap-element h1 {
+    /* Title inside the intro popup */
+    color: var(--orange);
+    font-size: 2rem;
+    text-shadow: 1px 1px 10px var(--orange);
+    text-align: center;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.interogative {
+    border-radius: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .group {
+        flex-direction: column;
+    }
+    .the-score {
+        padding-bottom: 10px;
+        transform: scale(0.9);
+    }
+    .popap-element {
+        margin-top: -100px;
+    }
+    .popap {
+        width: 100%;
+        height: 100%;
+    }
+    .container {
+        margin-bottom: 0;
+        transform: scale(0.8);
+    }
+    .game-over .pop-up-gameover,
+    .you-win .pop-up-you-win {
+        margin: 10px;
+    }
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        border-radius: none;
+    }
+    .form-container>div {
+        width: 100%;
+    }
+    .form-container .btn-x {
+        top: 20%;
+    }
+}
+
+
+/* footer */
+
+footer {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+    width: 100%;
+    background-color: black;
+}
+
+.feadback {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.personalle-acount {
+    /* Small profile box shown in intro overlay */
+    display: flex;
+    gap: 10px;
+    border-radius: 50px;
+    padding-right: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.personalle-acount img {
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--orange);
+}
+
+.personalle-acount h1 {
+    text-transform: uppercase;
+    font-size: 0.5rem;
+    color: var(--blue-66);
+    font-weight: 700;
+    font-family: cursive;
+}
+
+.send-feadback {
+    display: none;
+}
+
+.form-container {
+    position: relative;
+    width: 500px;
+    background-color: #fff;
+    padding: 32px 24px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #212121;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084), 0px 2px 3px rgba(0, 0, 0, 0.168);
+}
+
+.form-container button:active {
+    scale: 0.95;
+}
+
+.form-container .logo-container {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.form-container .form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.form-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-container .form-group input,
+.form-container .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: inherit;
+    border: 1px solid #ccc;
+}
+
+.form-container .form-group input::placeholder,
+.form-container .form-group textarea::placeholder {
+    opacity: 0.5;
+}
+
+.form-container .form-group textarea {
+    resize: vertical;
+    margin-top: 10px;
+}
+
+.form-container .form-group input:focus,
+.form-container .form-group textarea:focus {
+    outline: none;
+    border-color: #1778f2;
+}
+
+.form-container .form-submit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    color: #fff;
+    background-color: #212121;
+    border: none;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: inherit;
+    gap: 8px;
+    margin: 12px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084), 0px 2px 3px rgba(0, 0, 0, 0.168);
+}
+
+.form-container .form-submit-btn:hover {
+    background-color: #313131;
+}
+
+.form-container .btn-x {
+    cursor: pointer;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    position: absolute;
+    height: 30px;
+}
+
+.vissible {
+    display: flex;
+}
+
+.displynone {
+    display: none;
+}

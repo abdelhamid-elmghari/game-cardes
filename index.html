@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--
+    Memory Card Game - index.html
+    - Simple static page for a memory card game.
+    - This file contains the HTML structure: popups, intro overlay (popap), and the game grid.
+    - To run locally: open this file in your browser (see simple command at the end of this file or in the editor).
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Grenze+Gotisch:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libertinus+Keyboard&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Science+Gothic:wght@100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@100..900&display=swap"
+        rel="stylesheet">
+    <!-- // -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Grenze+Gotisch:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libertinus+Keyboard&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Press+Start+2P&family=Rubik:ital,wght@0,300..900;1,300..900&family=Science+Gothic:wght@100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="images/memorygame.png">
+    <!-- // -->
+    <!-- Main stylesheet: contains variables and styles for the entire game UI -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="scripts/app.js" type="module"></script>
+</head>
+
+<body>
+    <div class="send-feadback">
+        <div class="form-container">
+            <img class="btn-x" src="images/bouton-x.png" alt="">
+            <div>
+
+                <div class="logo-container">
+                    Let me know what you think!
+                </div>
+
+                <form class="form" action="https://formsubmit.co/helmghari608@gmail.com" method="post">
+                    <div class="form-group">
+                        <label for="name">name</label>
+                        <input type="text" name="name" placeholder="Enter your name" required>
+                        <label for="name">feadback</label>
+                        <textarea name="message" placeholder="add feadback"></textarea>
+                        <input type="hidden" name="_next" value="https://yourdomain.co/thanks.html">
+                        <input type="hidden" name="_subject" value="New submission!">
+                    </div>
+
+                    <button class="form-submit-btn" type="submit">Send feadback</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- Game over overlay: shown when player loses -->
+    <div class="game-over">
+        <div class="pop-up-gameover">
+            <img src="images/Xxx.jpeg" alt="">
+
+            <div class="btn">
+                <button class="btnDesing exit">Exit</button>
+                <button class="btnDesing continue">continue</button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Win overlay: shown when player wins -->
+    <div class="you-win">
+        <div class="pop-up-you-win">
+            <img src="images/win.jpeg" alt="">
+            <h1>You are the winner! Congratulations!</h1>
+            <div class="btn">
+                <button class="btnDesing Reset">Reset</button>
+                <button class="btnDesing try-again">Try agin</button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Intro overlay / popup (class: popap)
+         - Contains audio, user input (name), gender select, and start button.
+         - This overlay is typically visible at page load; clicking "Let's go" should hide it and start the game.
+    -->
+    <div class="popap">
+
+        <!-- Background audio for the intro / game (optional) -->
+        <audio class="audio" src="sounds/action-cinematic-music-414074.mp3"></audio>
+        <div class="blur">
+            <div class="popap-element">
+
+                <h1>Memory Card Game</h1>
+                <!-- User input and start controls -->
+                <div class="group">
+
+                    <!-- Username input -->
+                    <input id="name" class="input" type="name" placeholder="Username" name="username" />
+                    <!-- Gender choice used to swap profile image or styling (optional) -->
+                    <select class="choise" id="choix">
+                  <option value="" disabled selected hidden>Select gender: Male / Female</option>
+                  <option value="male">Male</option>
+                  <option value="famale">Female</option>
+                 
+                  </select>
+                    <button class="letsgo">Let's go </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Main game container: header (score) + cards grid -->
+    <div class="container">
+        <div class="title">
+            <div class="acount">
+                <img class="portfolio" src="images/fmale.jpg" alt="">
+                <h1 class="username"></h1>
+            </div>
+
+            <div class="the-score">
+                <div class="number">
+                    Score :<span class="score">00</span>
+                </div>
+                <div class="number">
+                    Win<span class="win">00</span>
+                </div>
+            </div>
+        </div>
+        <!-- Cards grid: each <li class="card"> represents a flip card with two faces
+             - `.font-view` shows the front (question mark image)
+             - `.back-view` shows the hidden card image
+             - Cards are usually shuffled/managed by `scripts/app.js` to provide game logic
+        -->
+        <div class="cards">
+            <ul>
+                <li class="card">
+                    <!-- Front face (covered) -->
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <!-- Back face (revealed when flipped) -->
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="view font-view">
+                        <img class="interogative" src="images/interogative.png" alt="">
+                    </div>
+                    <div class="view back-view">
+                        <img class="downters" src="images/1.png" alt="">
+                    </div>
+                </li>
+
+                <!-- NOTE: Repeated card elements follow the same structure above. -->
+            </ul>
+        </div>
+
+    </div>
+
+    <footer>
+
+        <!-- Small personal account card shown at intro (static info) -->
+        <div class="personalle-acount">
+            <img src="images/persone.jpg" alt="">
+            <h1>Elmghari abdelhamid</h1>
+        </div>
+
+        <div class="acounts">
+
+        </div>
+        <button class="feadback">Send feadback</button>
+    </footer>
+</body>
+
+</html>
