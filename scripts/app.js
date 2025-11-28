@@ -33,9 +33,10 @@ const choise = document.querySelector(".choise");
 const portfolio = document.querySelector(".acount");
 
 // Sound effects used in the game
-const popSong = new Audio('../sounds/mouse-click-sfx-free-376869.mp3');
-const noSong = new Audio("../sounds/no-no-no-242246.mp3");
-const winSong = new Audio("../sounds/triumphant-yes-x2-103141.mp3");
+const popSong = document.querySelector(".audio-mouse");
+
+const audioGamover = document.querySelector(".audio-gamover");
+const winSong = document.querySelector(".audio-win");
 const songaudio = document.querySelector(".audio"); // background audio element
 //
 const feadback = document.querySelector(".feadback");
@@ -71,7 +72,7 @@ function gameover() {
         gameOver.classList.add("vissible");
         container.classList.add("displynone");
         footer.classList.add("displynone");
-        noSong.play();
+        audioGamover.play();
     }
 
     // Continue button resets overlay and score counter

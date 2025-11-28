@@ -673,3 +673,10 @@ footer {
 .displynone {
     display: none;
 }
+
+.audio-detc {
+    opacity: 0;
+    z-index: -99;
+    width: 0;
+    height: 0;
+}
